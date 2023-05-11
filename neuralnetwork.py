@@ -3,7 +3,7 @@ from scipy.special import softmax
 
 
 class NeuralNetwork:
-    """_summary_"""
+    """a simple neural network"""
 
     def __init__(self, inputs: int, hidden: int, outputs: int) -> None:
         self.inputs = inputs
@@ -15,7 +15,7 @@ class NeuralNetwork:
         self.B1 = np.random.randn(hidden)
         self.B2 = np.random.randn(outputs)
 
-    def relu(self, x):
+    def relu(self, x: np.ndarray) -> np.ndarray:
         """return a rectified linear unit"""
         return np.maximum(x, np.zeros(x.shape))
 
@@ -25,8 +25,10 @@ class NeuralNetwork:
         """return the mean squared error of a prediction"""
         return np.square(expected - predicted)
 
-    def cross_entropy_error(self, expected, predicted):
-        """return the corss entropy error of a prediction"""
+    def cross_entropy_error(
+        self, expected: np.ndarray, predicted: np.ndarray
+    ) -> np.ndarray:
+        """return the cross entropy error of a prediction"""
         return np.sum(expected * np.log(predicted))
 
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -36,7 +38,7 @@ class NeuralNetwork:
 
         # output layer
         Z2 = np.dot(A1, self.W2) + self.B2
-        if self.hidden == 1:
+        if self.outputs == 1:
             return self.relu(Z2)
         else:
             return softmax(Z2)
